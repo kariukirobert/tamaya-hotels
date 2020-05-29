@@ -1,0 +1,46 @@
+
+/* sidebar styles */
+.sidebar {
+	width: 17%;
+	background: #000;
+	height: 92%;
+	position: absolute;
+}
+/* End sidebar styles */
+
+.sidebar a.list-group-item:hover {
+	background: #007bff;
+	color: #fff;
+	border-bottom: 1px solid #fff;
+	font-weight: bold;
+	font-style: italic;
+	padding-left: 2rem;
+}
+
+/* main styles */
+.main {
+	width: 83%;
+	margin-left: 17%;
+	/* background: red; */
+}
+.main .card-body {
+	height: 39rem;
+}
+.main nav {
+	position: fixed;
+	bottom: 0px;
+}
+/* End main styles */
+
+/* dashboard styles */
+.dashboard .container {
+	height: 38rem;
+}
+/* End dashboard styles */
+.site-cont-h {
+	height: 40rem;
+}
+.new-res .form-control.is-invalid, .new-res .form-control.is-valid {
+	background-position: right calc(1.075em + .1875rem) center;
+	padding-right: 3rem;
+}

@@ -1,0 +1,17 @@
+/* navbar styles */
+.navbar {
+	background: #005ec3 !important;
+}
+.navbar-nav .dropdown-menu {
+    left: -3.1rem;
+}
+.navbar-nav .dropdown-menu a:hover {
+	background: #007bff;
+	color: #fff;
+}
+
+/* wrapper styles */
+.wrapper {
+	height: 43.4rem;
+}
+/* End wrapper styles */
