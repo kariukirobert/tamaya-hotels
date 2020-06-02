@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     <link rel="stylesheet" href="{% static 'css/reservations.css' %}">
 
@@ -26,15 +27,15 @@
                 {% include "includes/sidebar.html" %}
                 
                 <div class="main py-2 pr-2 pl-3">
-                    <div class="card">
-                        <div class="card-body pt-3">
-
+                    {# <div class="card"> #}
+                        {# <div class="card-body pt-3"> #}
+                            
                             {% block main %}
                                 <!-- content to be displayed to page -->
                             {% endblock main %}
 
-                        </div>
-                    </div>
+                        {# </div> #}
+                    {# </div> #}
                 </div>
 
             {% endblock content %}

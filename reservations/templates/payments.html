@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Hotel Payments
+{% endblock title %}
+
+{% block main %}
+	<div class="card">
+	    <div class="card-body main-height">
+			<div class="shadow-none mb-3 rounded breadcrumb">
+				<ul class="list-unstyled mb-0">
+					<li class="d-inline-block"><h3>Payments</h3></li>
+					<li class="d-inline-block ml-5"><a href="{% url 'new_payment' %}" class="btn btn-primary">New</a></li>
+				</ul>
+			</div>
+			<div class="table-responsive">
+				{% if not reservations.exists %}
+					<div class="container d-flex justify-content-center align-items-center">
+						<div class="alert alert-danger w-100">
+							<p>No Reservations have been made yet.</p>
+						</div>
+					</div>
+				{% else %}
+					{% include "includes/messages.html" %}
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th class="font-italic" scope="col">Booking</th>
+								<th class="text-capitalize font-italic" scope="col">Payment Mode</th>
+								<th class="text-center font-italic" scope="col">Amount</th>
+								<th class="font-italic" scope="col">Room</th>
+								<th class="font-italic" scope="col">Customer</th>
+								<th class="font-italic" scope="col">Updated On</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for reservation in reservations %}
+								<tr>
+									<td scope="row">{{ forloop.counter }}</td>
+									<td class="text-capitalize font-italic">
+										<a href="{% url 'view_reservation' reservation.pk %}">{{ reservation.code }}</a>
+									</td>
+									<td class="text-capitalize font-weight-bold font-italic">{{ reservation.payment }}</td>
+									<td class="text-center">{{ reservation.room.price }}</td>
+									<td class="text-capitalize font-italic">
+										<a href="{% url 'view_room' reservation.room.pk %}">Room {{ reservation.room.room_number }}</a> - {{ reservation.room.room_type }}
+									</td>
+									<td class="text-capitalize font-italic">
+										<a href="{% url 'view_customer' reservation.customer.pk %}">{{ reservation.customer }}</a>
+									</td>
+									<td>{{ reservation.updated_at }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% include "includes/pagination.html" %}
+
+{% endblock main %}

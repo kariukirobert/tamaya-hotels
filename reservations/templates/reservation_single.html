@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block main %}
+    <div class="card">
+        <div class="card-body main-height">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="table-responsive">
+                        <h2 class="text-center font-weight-bold font-italic text-primary">Reservation Details</h2>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Code</th>
+                                    <td>{{ reservation.code }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Booked By</th>
+                                    <td class="text-capitalize">
+                                        <a href="{% url 'view_customer' reservation.customer_id %}">{{ reservation.customer.name }}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Room Booked</th>
+                                    <td class="text-capitalize">
+                                        <a href="{% url 'view_room' reservation.room_id %}">{{ reservation.room }}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Amount Paid</th>
+                                    <td><strong>KSH. </strong>{{ reservation.room.price|intcomma }}</td>
+                                </tr>
+                                <tr>
+                                    <th>No. of Nights</th>
+                                    <td>{{ reservation.nights }}</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Created</th>
+                                    <td><strong>At - </strong> {{ reservation.created_at }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-capitalize"><strong>By - </strong>{{ reservation.created_by }}</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Updated</th>
+                                    <td><strong>At - </strong>{{ reservation.updated_at }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-capitalize"><strong>By - </strong>{{ reservation.updated_by }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

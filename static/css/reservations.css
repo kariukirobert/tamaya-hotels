@@ -1,4 +1,17 @@
-
+/* global custom styles */
+.cont-30 {
+	height: 30rem;
+}
+.site-cont-h {
+	height: 41rem;
+}
+.main-height {
+	min-height: 39rem;
+}
+.c-height {
+	min-height: 30rem;
+}
+/* End of global custom styles */
 /* sidebar styles */
 .sidebar {
 	width: 17%;
@@ -23,9 +36,7 @@
 	margin-left: 17%;
 	/* background: red; */
 }
-.main .card-body {
-	height: 39rem;
-}
+
 .main nav {
 	position: fixed;
 	bottom: 0px;
@@ -37,9 +48,6 @@
 	height: 38rem;
 }
 /* End dashboard styles */
-.site-cont-h {
-	height: 40rem;
-}
 .new-res .form-control.is-invalid, .new-res .form-control.is-valid {
 	background-position: right calc(1.075em + .1875rem) center;
 	padding-right: 3rem;

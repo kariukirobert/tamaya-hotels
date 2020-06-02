@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block main %}
+    <div class="card">
+	    <div class="card-body main-height">
+	    	<div class="row">
+            	<div class="col-md-8 mx-auto">
+            		<div class="table-responsive">
+            			<h2 class="text-center font-weight-bold font-italic text-primary">Customer Details</h2>
+			    		<table class="table table-bordered table-striped table-hover">
+			    			<thead>
+			    				<tr>
+			    					<th scope="col">Item</th>
+			    					<th scope="col">Details</th>
+			    				</tr>
+			    			</thead>
+			    			<tbody>
+		    					<tr>
+		    						<th>Code</th>
+		    						<td>{{ customer.id }}</td>
+		    					</tr>
+		    					<tr>
+		    						<th>Name</th>
+		    						<td>{{ customer.name }}</td>
+		    					</tr>
+		    					<tr>
+		    						<th>Phone Number</th>
+		    						<td>{{ customer.phone }}</td>
+		    					</tr>
+		    					<tr>
+		    						<th>Id Number</th>
+		    						<td>{{ customer.id_number }}</td>
+		    					</tr>
+		    					<tr>
+		    					    <th>Reservation Code</th>
+		    					    <td>
+		    					        <a href="{% url 'view_reservation' customer.reservations.first.id %}">{{ customer.reservations.first.code }}</a>
+		    					    </td>
+		    					</tr>
+		    					<tr>
+		    						<th>Room Booked</th>
+		    						<td>
+		    							<a href="{% url 'view_room' customer.reservations.first.room_id %}">{{ customer.reservations.first.room }}</a>
+		    						</td>
+		    					</tr>
+		    					<tr>
+		    						<th>Amount Paid</th>
+		    						<td><strong>KSH. </strong>{{ customer.reservations.first.room.price|intcomma }}</td>
+		    					</tr>
+		    					<tr>
+		    						<th>Nights Booked</th>
+		    						<td>{{ customer.reservations.first.nights }}</td>
+		    					</tr>
+		    					<tr>
+		    						<th rowspan="2">Created</th>
+		    						<td><strong>At - </strong>{{ customer.created_at }}</td>
+		    					</tr>
+		    					<tr>
+		    						<td class="text-capitalize"><strong>By - </strong>{{ customer.created_by }}</td>
+		    					</tr>
+		    					<tr>
+		    						<th rowspan="2">Updated</th>
+		    						<td><strong>At - </strong>{{ customer.updated_at }}</td>
+		    					</tr>
+		    					<tr>
+		    						<td class="text-capitalize"><strong>By - </strong>{{ customer.updated_by }}</td>
+		    					</tr>
+			    			</tbody>
+			    		</table>
+			    	</div>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+{% endblock main %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block main %}
+    <div class="card">
+        <div class="card-body main-height">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="table-responsive">
+                        <h2 class="font-weight-bold text-center font-italic text-primary">Rooms Details</h2>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Code</th>
+                                    <td>{{ room.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Room Number</th>
+                                    <td>{{ room.room_number }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Room Type</th>
+                                    <td class="text-capitalize">{{ room.room_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <td>{{ room.description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Price</th>
+                                    <td><strong>KSH. </strong>{{ room.price|intcomma }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Reservation Code</th>
+                                    <td>
+                                        <a href="{% url 'view_reservation' room.reservations.first.id %}">{{ room.reservations.first.code }}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Booked By</th>
+                                    <td><a href="{% url 'view_customer' room.reservations.first.customer_id %}">{{ room.reservations.first.customer.name }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Nights Booked</th>
+                                    <td>{{ room.reservations.first.nights }}</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Created</th>
+                                    <td><strong>At - </strong>{{ room.created_at }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-capitalize"><strong>By - </strong>{{ room.created_by }}</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Updated</th>
+                                    <td><strong>At - </strong>{{ room.updated_at }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-capitalize"><strong>By - </strong>{{ room.updated_by }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}
