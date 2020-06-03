@@ -11,7 +11,7 @@
                         <h2 class="text-center font-weight-bold font-italic text-primary">Reservation Details</h2>
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
-                                <tr>
+                                <tr class="text-white {%if reservation.is_active %}bg-success{%else%}bg-danger{%endif%}">
                                     <th scope="col">Item</th>
                                     <th scope="col">Details</th>
                                 </tr>
@@ -42,18 +42,32 @@
                                     <td>{{ reservation.nights }}</td>
                                 </tr>
                                 <tr>
-                                    <th rowspan="2">Created</th>
-                                    <td><strong>At - </strong> {{ reservation.created_at }}</td>
+                                    <th>Check In</th>
+                                    <td>{{ reservation.check_in|date:"Y-m-d" }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-capitalize"><strong>By - </strong>{{ reservation.created_by }}</td>
+                                    <th>Check Out</th>
+                                    <td>{{ reservation.check_out|date:"Y-m-d" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
+                                        {% if reservation.is_active %} Active {% else %} Closed {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Created</th>
+                                    <td><strong>Date - </strong> {{ reservation.created_at }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-capitalize"><strong>Staff - </strong>{{ reservation.created_by }}</td>
                                 </tr>
                                 <tr>
                                     <th rowspan="2">Updated</th>
-                                    <td><strong>At - </strong>{{ reservation.updated_at }}</td>
+                                    <td><strong>Date - </strong>{{ reservation.updated_at }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-capitalize"><strong>By - </strong>{{ reservation.updated_by }}</td>
+                                    <td class="text-capitalize"><strong>Staff - </strong>{{ reservation.updated_by }}</td>
                                 </tr>
                             </tbody>
                         </table>

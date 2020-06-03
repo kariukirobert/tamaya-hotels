@@ -6,7 +6,7 @@
 
 {% block main %}
 	<div class="card">
-	    <div class="card-body main-height">
+	    <div class="card-body main-height px-2">
 			<div class="shadow-none mb-3 rounded breadcrumb">
 				<ul class="list-unstyled mb-0">
 					<li class="d-inline-block"><h3>Reservations</h3></li>
@@ -26,33 +26,45 @@
 						<thead>
 							<tr>
 								<th scope="col">#</th>
-								<th scope="col">Code</th>
 								<th scope="col">Room</th>
-								<th scope="col">Customer Name</th>
-								<th scope="col">No. of Nights</th>
+								<th scope="col">Customer</th>
+								<th scope="col">Nights</th>
+								<th scope="col">Check In</th>
+								<th scope="col">Check Out</th>
+								<th scope="col">Status</th>
 								<th scope="col">Amount</th>
 								<th scope="col">Payment</th>
-								<th scope="col">Created On</th>
-								<th scope="col">Action</th>
+								<th scope="col">Updated On</th>
+								<th class="tb-action" scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							{% for reservation in reservations %}
 								<tr>
 									<td scope="row">{{ forloop.counter }}</td>
-									<td>{{ reservation.code }}</td>
 									<td>
-										<a href="{% url 'view_room' reservation.room.pk %}"><strong>Room {{ reservation.room.room_number }}</strong></a> - <em>{{ reservation.room.room_type }}</em></td>
+										<a href="{% url 'view_room' reservation.room.pk %}"><strong>Room {{ reservation.room.room_number }}</strong></a>
+									</td>
 									<td class="text-capitalize">
 										<a href="{% url 'view_customer' reservation.customer.pk %}">{{ reservation.customer }}</a>
 									</td>
 									<td>{{ reservation.nights }}</td>
+									<td>{{ reservation.check_in|date:"Y-m-d" }}</td>
+									<td>{{ reservation.check_out|date:"Y-m-d" }}</td>
+									<td>
+										{% if reservation.is_active %}
+											<span class="bg-success text-white py-1 px-2">Active</span>
+										{% else %}
+											<span class="bg-danger text-white py-1 px-2">Closed</span>
+										{% endif %}
+									</td>
 									<td>{{ reservation.room.price }}</td>
 									<td class="text-capitalize">{{ reservation.payment }}</td>
-									<td>{{ reservation.created_at }}</td>
+									<td>{{ reservation.updated_at|date:"Y-m-d H:i" }}</td>
 									<td>
-										<a href="{% url 'edit_reservation' reservation.pk %}" class="btn btn-info">Edit</a>
-										<a href="{% url 'delete_reservation' reservation.pk %}" class="btn btn-danger">Delete</a>
+										<a href="{% url 'view_reservation' reservation.pk %}" class="btn btn-info btn-sm">View</a>
+										<a href="{% url 'edit_reservation' reservation.pk %}" class="btn btn-warning btn-sm">Edit</a>
+										<a href="{% url 'delete_reservation' reservation.pk %}" class="btn btn-danger btn-sm">Delete</a>
 									</td>
 								</tr>
 							{% endfor %}
@@ -62,7 +74,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 	{% include "includes/pagination.html" %}
 
 {% endblock main %}

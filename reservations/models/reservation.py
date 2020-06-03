@@ -16,9 +16,12 @@ class Reservation(models.Model):
 	customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE, related_name='reservations')
 	nights = models.PositiveSmallIntegerField(default=1)
 	payment = models.CharField(max_length=10, choices=PAYMENT_CHOICES)
+	check_in = models.DateField()
+	check_out = models.DateField()
+	is_active = models.BooleanField(default=True)
 	created_by = models.ForeignKey(settings.AUTH_USER_MODEL , null=True, on_delete=models.CASCADE, related_name='reservations')
-	updated_by = models.ForeignKey(settings.AUTH_USER_MODEL , null=True, on_delete=models.CASCADE, related_name='+')
 	created_at = models.DateTimeField(auto_now=True)
+	updated_by = models.ForeignKey(settings.AUTH_USER_MODEL , null=True, on_delete=models.CASCADE, related_name='+')
 	updated_at = models.DateTimeField(auto_now_add=True)
 
 

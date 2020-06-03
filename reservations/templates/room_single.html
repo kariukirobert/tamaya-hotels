@@ -11,16 +11,12 @@
                         <h2 class="font-weight-bold text-center font-italic text-primary">Rooms Details</h2>
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
-                                <tr>
+                                <tr class="text-white {%if room.is_booked %}bg-success{%else%}bg-danger{%endif%}">
                                     <th scope="col">Item</th>
                                     <th scope="col">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>Code</th>
-                                    <td>{{ room.id }}</td>
-                                </tr>
                                 <tr>
                                     <th>Room Number</th>
                                     <td>{{ room.room_number }}</td>
@@ -30,27 +26,43 @@
                                     <td class="text-capitalize">{{ room.room_type }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Description</th>
-                                    <td>{{ room.description }}</td>
-                                </tr>
-                                <tr>
                                     <th>Price</th>
                                     <td><strong>KSH. </strong>{{ room.price|intcomma }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Reservation Code</th>
-                                    <td>
-                                        <a href="{% url 'view_reservation' room.reservations.first.id %}">{{ room.reservations.first.code }}</a>
-                                    </td>
+                                    <th>Status</th>
+                                    <td class="text-capitalize">{{ room.status }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Booked By</th>
-                                    <td><a href="{% url 'view_customer' room.reservations.first.customer_id %}">{{ room.reservations.first.customer.name }}</a></td>
+                                    <th>Is Booked</th>
+                                    <td>{{ room.is_booked }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Nights Booked</th>
-                                    <td>{{ room.reservations.first.nights }}</td>
+                                    <th>Has Damages</th>
+                                    <td>{{ room.has_damages }}</td>
                                 </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <td>{{ room.description }}</td>
+                                </tr>
+
+                                {% if room.reservations.first.exists %}
+                                    <tr>
+                                        <th>Reservation Code</th>
+                                        <td>
+                                            <a href="{% url 'view_reservation' room.reservations.first.id %}">{{ room.reservations.first.code }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Booked By</th>
+                                        <td><a href="{% url 'view_customer' room.reservations.first.customer_id %}">{{ room.reservations.first.customer.name }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nights Booked</th>
+                                        <td>{{ room.reservations.first.nights }}</td>
+                                    </tr>                                
+                                {% endif %}
+
                                 <tr>
                                     <th rowspan="2">Created</th>
                                     <td><strong>At - </strong>{{ room.created_at }}</td>

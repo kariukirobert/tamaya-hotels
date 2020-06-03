@@ -6,6 +6,7 @@ class Customer(models.Model):
 	name = models.CharField(max_length=191)
 	phone = models.CharField(max_length=191, blank=True, null=True)
 	id_number = models.CharField(max_length=191, blank=True, null=True)
+	is_active = models.BooleanField(default=True)
 	# room = models.OneToOneField('Reservation', null=True, on_delete=models.SET_NULL, related_name='reservations')
 	# room = models.ForeignKey(Room, null=True, on_delete=models.SET_NULL, related_name='customers')
 	# nights = models.PositiveSmallIntegerField(default=1)

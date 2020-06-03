@@ -52,3 +52,9 @@
 	background-position: right calc(1.075em + .1875rem) center;
 	padding-right: 3rem;
 }
+
+/* reservation page styles */
+.tb-action {
+	width: 12rem;
+}
+/* End reservation page styles */

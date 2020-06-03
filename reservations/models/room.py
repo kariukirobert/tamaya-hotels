@@ -33,12 +33,22 @@ ROOM_TYPE_CHOICES = (
 	('Deluxe', 'Deluxe'),
 	('Suite', 'Suite'),
 )
+ROOM_STATUS_CHOICES = (
+	('repair', 'Under Repair'),
+	('cleaning', 'Cleaning'),
+	('closed', 'Closed'),
+	('active', 'Active'),
+	('missing_materials', 'Missing Materials')
+)
 class Room(models.Model):
 	room_number = models.CharField(unique=True, max_length=50)
 	room_type = models.CharField(max_length=191, choices=ROOM_TYPE_CHOICES)
 	# room_type = models.ForeignKey(RoomType, null=True, on_delete=models.SET_NULL, related_name='rooms')
-	description = models.TextField(blank=True)
 	price = models.CharField(max_length=10)
+	status = models.CharField(max_length=20, default='active', choices=ROOM_STATUS_CHOICES)
+	is_booked = models.BooleanField(default=False)
+	has_damages = models.BooleanField(default=False)
+	description = models.TextField(blank=True)
 	created_by = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, null=True, on_delete=models.CASCADE, related_name='rooms')
 	updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, null=True, on_delete=models.CASCADE, related_name='+')
 	created_at = models.DateTimeField(auto_now_add=True)

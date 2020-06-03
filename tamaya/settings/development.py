@@ -18,7 +18,7 @@ DEBUG_TOOLBAR_CONFIG = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tamaya_new',
+        'NAME': 'tamaya',
         'USER': 'root',
         'PASSWORD': 'HelloWorld',
         'PORT': '5432',
