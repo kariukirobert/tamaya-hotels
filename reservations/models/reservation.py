@@ -5,6 +5,28 @@ from .room import Room
 from .customer import Customer
 
 
+class ReservationQuerySet(models.QuerySet):
+	def active(self):
+		return self.filter(is_active=True)
+
+
+	def closed(self):
+		return self.filter(is_active=False)
+
+
+class ReservationManager(models.Manager):
+	def get_queryset(self):
+		return ReservationQuerySet(self.model, using=self._db)
+
+
+	def active(self):
+		return self.get_queryset().active()
+
+
+	def closed(self):
+		return self.get_queryset().closed()
+
+
 PAYMENT_CHOICES = (
 	('cash', 'Cash'),
 	('mpesa', 'M-pesa'),
@@ -20,9 +42,12 @@ class Reservation(models.Model):
 	check_out = models.DateField()
 	is_active = models.BooleanField(default=True)
 	created_by = models.ForeignKey(settings.AUTH_USER_MODEL , null=True, on_delete=models.CASCADE, related_name='reservations')
-	created_at = models.DateTimeField(auto_now=True)
+	created_at = models.DateTimeField(auto_now_add=True)
 	updated_by = models.ForeignKey(settings.AUTH_USER_MODEL , null=True, on_delete=models.CASCADE, related_name='+')
-	updated_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+
+	objects = ReservationManager()
 
 
 	class Meta:

@@ -73,7 +73,7 @@ class ReservationForm(forms.ModelForm):
 			check_out = cleaned_data.get('check_out')
 			now = datetime.now().date()
 			if check_in < now:
-				msg = u"Check in date must be today or greater than today"
+				msg = u"Check in date must not be less than today"
 				self._errors['check_in'] = self.error_class([msg])
 
 			if check_in >= check_out:
@@ -91,6 +91,35 @@ class UpdateReservationForm(forms.ModelForm):
 	class Meta:
 		model = Reservation
 		fields = ('room', 'nights', 'payment', 'check_in', 'check_out', 'is_active')
+
+	def clean(self):
+		instance = self.instance
+		cleaned_data = super().clean()
+		if cleaned_data.get('room') is not None:
+			room = cleaned_data.get('room')
+			qs = Room.objects.filter(pk=room.id, is_booked=True)
+			if qs.exists():
+				msg = u"This room is already booked!!!!"
+				self._errors['room'] = self.error_class([msg])
+
+		if cleaned_data.get('check_in') and cleaned_data.get('check_out') is not None:
+			check_in = cleaned_data.get('check_in')
+			check_out = cleaned_data.get('check_out')
+			now = datetime.now().date()
+
+			if instance is None:
+				if check_in < now:
+					msg = u"Check in date must not be less than today"
+					self._errors['check_in'] = self.error_class([msg])
+
+				if check_in >= check_out:
+					msg = u"Check out date must be greater than Check in date"
+					self._errors['check_out'] = self.error_class([msg])
+
+
+		if cleaned_data.get('nights') < 1 or None:
+			msg = u"Enter correct value of nights"
+			self.errors['nights'] = self.error_class([msg])
 
 
 class RoomForm(forms.ModelForm):

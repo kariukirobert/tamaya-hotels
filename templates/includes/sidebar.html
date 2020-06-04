@@ -1,11 +1,41 @@
 <div class="sidebar bg-secondary position-fixed">
-	<div class="list-group ml-2 mr-2">
-		<li class="list-group-item bg-dark text-white mb-2 rounded-0"><h3 class="font-weight-bold text-uppercase py-0 mb-0">Dashboard</h3></li>
-		<a class="list-group-item list-group-item-action" href="{% url 'reservations' %}">Bookings</a>
-		<a class="list-group-item list-group-item-action" href='{% url "customers" %}'>Customers</a>
-		<a class="list-group-item list-group-item-action" href='{% url "rooms" %}'>Rooms</a>
-		<a class="list-group-item list-group-item-action" href='{% url "payments" %}'>Payments</a>
-		<a class="list-group-item list-group-item-action" href="#list-settings">Meal Plans</a>
-		<a class="list-group-item list-group-item-action rounded-0" href="#list-settings">POS</a>
+	<div class="list-group mx-2">
+		<li class="list-group-item bg-dark text-white mb-2 rounded-0"><h5 class="font-weight-bold text-uppercase py-0 mb-0">Admin Dashboard</h5></li>
+		<a class="list-group-item" data-toggle="collapse" href="#bookings" role="button" aria-expanded="false" aria-controls="bookings">
+		    Reservations
+		</a>
+		<div class="collapse pl-3" id="bookings">
+			<a class="list-group-item a-l" href="{% url 'reservations' %}">All Bookings</a>
+			<a class="list-group-item a-l" href="{% url 'active_reservations' %}">Active Bookings</a>
+			<a class="list-group-item a-l" href="{% url 'closed_reservations' %}">Closed Bookings</a>
+		</div>
+		<a class="list-group-item" data-toggle="collapse" href="#customers" role="button" aria-expanded="false" aria-controls="customers">
+		    Customers
+		</a>
+		<div class="collapse pl-3" id="customers">
+			<a class="list-group-item a-l" href="{% url 'customers' %}">All Customers</a>
+			<a class="list-group-item a-l" href="{% url 'customers' %}">Active</a>
+			<a class="list-group-item a-l" href="{% url 'customers' %}">Closed</a>
+		</div>
+		<a class="list-group-item" data-toggle="collapse" href="#rooms" role="button" aria-expanded="false" aria-controls="rooms">
+		    Rooms
+		</a>
+		<div class="collapse pl-3" id="rooms">
+			<a class="list-group-item a-l" href="{% url 'rooms' %}">All Rooms</a>
+			<a class="list-group-item a-l" href="{% url 'rooms' %}">Active</a>
+			<a class="list-group-item a-l" href="{% url 'rooms' %}">Not Active</a>
+			<a class="list-group-item a-l" href="{% url 'rooms' %}">Has Damages</a>
+		</div>
+		<a class="list-group-item" data-toggle="collapse" href="#payments" role="button" aria-expanded="false" aria-controls="payments">
+		    Payments
+		</a>
+		<div class="collapse pl-3" id="payments">
+			<a class="list-group-item a-l" href="{% url 'payments' %}">All Payments</a>
+			<a class="list-group-item a-l" href="{% url 'payments' %}">Cash</a>
+			<a class="list-group-item a-l" href="{% url 'payments' %}">Card</a>
+			<a class="list-group-item a-l" href="{% url 'payments' %}">M-pesa</a>
+		</div>
+		<a class="list-group-item" href="#list-settings">Meal Plans</a>
+		<a class="list-group-item rounded-0" href="#list-settings">POS</a>
 	</div>
 </div>

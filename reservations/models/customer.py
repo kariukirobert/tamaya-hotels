@@ -10,8 +10,8 @@ class Customer(models.Model):
 	# room = models.OneToOneField('Reservation', null=True, on_delete=models.SET_NULL, related_name='reservations')
 	# room = models.ForeignKey(Room, null=True, on_delete=models.SET_NULL, related_name='customers')
 	# nights = models.PositiveSmallIntegerField(default=1)
-	created_at = models.DateTimeField(auto_now=True)
-	updated_at = models.DateTimeField(auto_now_add=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 	created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+')
 	updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+')
 
