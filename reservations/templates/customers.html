@@ -6,10 +6,10 @@
 
 {% block main %}
 	<div class="card">
-	    <div class="card-body main-height">
+	    <div class="card-body main-height px-2">
 			<div class="shadow-none mb-3 rounded breadcrumb">
 				<ul class="list-unstyled mb-0">
-					<li class="d-inline-block"><h3>Customers</h3></li>
+					<li class="d-inline-block text-primary"><h3>Customers</h3></li>
 					{# <li class="d-inline-block ml-5"><a href="{% url 'new_customer' %}" class="btn btn-primary">New</a></li> #}
 				</ul>
 			</div>
@@ -25,34 +25,46 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Name</th>
-								<th scope="col">Phone Number</th>
-								<th scope="col">Id Number</th>
-								<th scope="col">Booking</th>
-								<th scope="col">Room Booked</th>
-								<th scope="col">Created On</th>
-								<th scope="col">Action</th>
+								<th class="font-italic" scope="col">#</th>
+								<th class="font-italic" scope="col">Name</th>
+								<th class="font-italic" scope="col">Phone Number</th>
+								<th class="font-italic" scope="col">Id Number</th>
+								<th class="font-italic" scope="col">Booking</th>
+								<th class="font-italic" scope="col">Room Booked</th>
+								<th class="font-italic" scope="col">Status</th>
+								<th class="font-italic" scope="col">Created On</th>
+								<th class="font-italic tb-action" scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							{% for reservation in reservations %}
 								<tr>
 									<th scope="row">{{ forloop.counter }}</th>
-									<td class="text-capitalize">{{ reservation.customer.name }}</td>
-									<td>{{ reservation.customer.phone }}</td>
-									<td>{{ reservation.customer.id_number }}</td>
-									<td>{% if not reservation  %} - {% else %} 
+									<td class="text-capitalize font-italic">{{ reservation.customer.name }}</td>
+									<td class="font-italic">{{ reservation.customer.phone }}</td>
+									<td class="font-italic">{{ reservation.customer.id_number }}</td>
+									<td class="text-capitalize font-italic">
+										{% if not reservation  %} - {% else %} 
 										<a href="{% url 'view_reservation' reservation.pk %}">{{ reservation.code }}</a> {% endif %}
 									</td>
-									<td>{% if not reservation  %} - {% else %} 
-										<a href="{% url 'view_room' reservation.room.pk %}">{{ reservation.room }}</a> {% endif %}
+									<td class="text-capitalize font-italic">
+										{% if not reservation.room  %} - {% else %} 
+										<a href="{% url 'view_room' reservation.room.pk %}">Room {{ reservation.room.room_number }}</a> - {{ reservation.room.room_type }}
+										{% endif %}
 									</td>
 									{# <td>{% if not reservation.reservations.exists  %} - {% else %} {{ reservation.reservations.first.room }} {% endif %}</td> #}
-									<td>{{ reservation.customer.created_at }}</td>
 									<td>
-										<a href="{% url 'edit_customer' reservation.customer.pk %}" class="btn btn-info">Edit</a>
-										<a href="{% url 'delete_customer' reservation.customer.pk %}" class="btn btn-danger">Delete</a>
+										{% if reservation.is_active %}
+											<span class="bg-success text-white py-1 px-2">Active</span>
+										{% else %}
+											<span class="bg-danger text-white py-1 px-2">Closed</span>
+										{% endif %}
+									</td>
+									<td class="font-italic">{{ reservation.customer.created_at|date:"Y-m-d H:i" }}</td>
+									<td>
+										<a href="{% url 'view_customer' reservation.pk %}" class="btn btn-info btn-sm">View</a>
+										<a href="{% url 'edit_customer' reservation.customer.pk %}" class="btn btn-warning btn-sm">Edit</a>
+										<a href="{% url 'delete_customer' reservation.customer.pk %}" class="btn btn-danger btn-sm">Delete</a>
 									</td>
 								</tr>
 							{% endfor %}

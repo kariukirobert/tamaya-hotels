@@ -9,7 +9,7 @@
 	    <div class="card-body main-height">
 			<div class="shadow-none mb-3 rounded breadcrumb">
 				<ul class="list-unstyled mb-0">
-					<li class="d-inline-block"><h3>Rooms</h3></li>
+					<li class="d-inline-block text-primary"><h3>Rooms</h3></li>
 					<li class="d-inline-block ml-5"><a href="{% url 'new_room' %}" class="btn btn-primary">New</a></li>
 				</ul>
 			</div>
@@ -32,7 +32,7 @@
 								<th class="text-center font-italic" scope="col">Status</th>
 								<th class="text-center font-italic" scope="col">Damaged</th>
 								<th class="font-italic" scope="col">Updated On</th>
-								<th class="font-italic text-center" scope="col">Action</th>
+								<th class="font-italic text-center tb-action" scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,7 +45,7 @@
 									<td>{{ room.is_booked }}</td>
 									<td class="text-capitalize">{{ room.status }}</td>
 									<td>{{ room.has_damages }}</td>
-									<td>{{ room.updated_at }}</td>
+									<td>{{ room.updated_at|date:"Y-m-d H:i" }}</td>
 									<td class="text-center">
 										<a href="{% url 'view_room' room.pk %}" class="btn btn-info btn-sm">View</a>
 										<a href="{% url 'edit_room' room.pk %}" class="btn btn-warning btn-sm">Edit</a>

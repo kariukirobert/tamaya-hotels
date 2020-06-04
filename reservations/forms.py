@@ -81,6 +81,11 @@ class ReservationForm(forms.ModelForm):
 				self._errors['check_out'] = self.error_class([msg])
 
 
+		if cleaned_data.get('nights') < 1 or None:
+			msg = u"Enter correct value of nights"
+			self.errors['nights'] = self.error_class([msg])
+
+
 
 class UpdateReservationForm(forms.ModelForm):
 	class Meta:
