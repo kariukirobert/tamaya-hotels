@@ -34,7 +34,8 @@ PAYMENT_CHOICES = (
 )
 class Reservation(models.Model):
 	code = models.CharField(unique=True, max_length=10)
-	room = models.ForeignKey(Room, null=True, on_delete=models.CASCADE, related_name='reservations')
+	# room = models.ForeignKey(Room, null=True, on_delete=models.CASCADE, related_name='reservations')
+	room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='reservations')
 	customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE, related_name='reservations')
 	nights = models.PositiveSmallIntegerField(default=1)
 	payment = models.CharField(max_length=10, choices=PAYMENT_CHOICES)

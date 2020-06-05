@@ -5,7 +5,22 @@ from ..forms import RoomForm
 
 def roomsList(request):
 	rooms = Room.objects.all()
-	return render(request, 'rooms.html', { 'rooms': rooms})
+	return render(request, 'rooms.html', { 'rooms': rooms, 'e_r_text': 'No Room exists.' })
+
+
+def bookedRoom(request):
+	rooms = Room.objects.booked()
+	return render(request, 'rooms.html', { 'rooms': rooms, 'e_r_text': 'No Room has been booked yet.' })
+
+
+def notBookedRoom(request):
+	rooms = Room.objects.notBooked()
+	return render(request, 'rooms.html', { 'rooms': rooms, 'e_r_text': 'No empty Room exists. All Rooms are booked' })
+
+
+def hasDamagesRoom(request):
+	rooms = Room.objects.hasDamages()
+	return render(request, 'rooms.html', { 'rooms': rooms, 'e_r_text': 'No Room with damages exists.' })
 
 
 @login_required

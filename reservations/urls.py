@@ -17,12 +17,23 @@ urlpatterns = [
 
     path('staffAccount/customers/', views.customerList, name='customers'),
     path('staffAccount/customers/new/', views.createCustomer, name='new_customer'),
+    path('staffAccount/customers/active/', views.activeCustomer, name='active_customers'),
+    path('staffAccount/customers/close/', views.closedCustomer, name='closed_customers'),
     path('staffAccount/customers/<int:pk>/', views.viewCustomer, name='view_customer'),
     path('staffAccount/customers/<int:pk>/edit/', views.editCustomer, name='edit_customer'),
     path('staffAccount/customers/<int:pk>/delete/', views.deleteCustomer, name='delete_customer'),
 
+    path('staffAccount/damages/', views.damagesList, name='damages'),
+    # path('staffAccount/rooms/has-damages/', views.hasDamagesRoom, name='has_damages_rooms'),
+    path('staffAccount/damages/<int:pk>/', views.viewDamage, name='view_damage'),
+    path('staffAccount/damages/<int:pk>/edit/', views.editDamage, name='edit_damage'),
+    path('staffAccount/damages/<int:pk>/delete/', views.deleteDamage, name='delete_damage'),
+
     path('staffAccount/rooms/', views.roomsList, name='rooms'),
     path('staffAccount/rooms/new/', views.createRoom, name='new_room'),
+    path('staffAccount/rooms/booked/', views.bookedRoom, name='booked_rooms'),
+    path('staffAccount/rooms/not-booked/', views.notBookedRoom, name='not_booked_rooms'),
+    path('staffAccount/rooms/has-damages/', views.hasDamagesRoom, name='has_damages_rooms'),
     path('staffAccount/rooms/<int:pk>/', views.viewRoom, name='view_room'),
     path('staffAccount/rooms/<int:pk>/edit/', views.editRoom, name='edit_room'),
     path('staffAccount/rooms/<int:pk>/delete/', views.deleteRoom, name='delete_room'),

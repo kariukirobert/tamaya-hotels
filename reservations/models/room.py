@@ -27,6 +27,36 @@ from django.db import models
 # 	def __str__(self):
 # 		return f"{self.category} -- {self.name}"
 
+class RoomQuerySet(models.QuerySet):
+	def booked(self):
+		return self.filter(is_booked=True)
+
+
+	def notBooked(self):
+		return self.filter(is_booked=False)
+
+
+	def hasDamages(self):
+		return self.filter(has_damages=True)
+
+
+class RoomManager(models.Manager):
+	def get_queryset(self):
+		return RoomQuerySet(self.model, using=self._db)
+
+
+	def booked(self):
+		return self.get_queryset().booked()
+
+
+	def notBooked(self):
+		return self.get_queryset().notBooked()
+
+
+	def hasDamages(self):
+		return self.get_queryset().hasDamages()
+
+
 ROOM_TYPE_CHOICES = (
 	('Single', 'Single'),
 	('Double', 'Double'),
@@ -54,6 +84,8 @@ class Room(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+
+	objects = RoomManager()
 
 	class Meta:
 		db_table = 'hotel_rooms'

@@ -17,7 +17,7 @@
 				{% if not rooms.exists %}
 					<div class="container d-flex justify-content-center align-items-center">
 						<div class="alert alert-danger w-100">
-							<p>No Rooms exists.</p>
+							<p>{{ e_r_text }}</p>
 						</div>
 					</div>
 				{% else %}
@@ -27,6 +27,7 @@
 								<th scope="col">#</th>
 								<th class="text-center font-italic" scope="col">Room Number</th>
 								<th class="font-italic" scope="col">Room Type</th>
+								<th class="text-center font-italic" scope="col">Price</th>
 								<th class="text-center font-italic" scope="col">Description</th>
 								<th class="text-center font-italic" scope="col">Booked</th>
 								<th class="text-center font-italic" scope="col">Status</th>
@@ -41,11 +42,12 @@
 									<td scope="row">{{ forloop.counter }}</td>
 									<td class="text-center font-weight-bold font-italic text-white {%if room.is_booked %}bg-success{%else%}bg-danger{%endif%}">{{ room.room_number }}</td>
 									<td class="text-capitalize font-italic">{{ room.room_type }}</td>
+									<td class="font-italic">{{ room.price }}</td>
 									<td class="{% if not room.description %}text-center font-weight-bold {% endif %} text-capitalize">{% if not room.description  %} - {% else %} {{ room.description|truncatechars:40 }} {% endif %}</td>
-									<td>{{ room.is_booked }}</td>
-									<td class="text-capitalize">{{ room.status }}</td>
-									<td>{{ room.has_damages }}</td>
-									<td>{{ room.updated_at|date:"Y-m-d H:i" }}</td>
+									<td class="font-italic">{{ room.is_booked }}</td>
+									<td class="text-capitalize font-italic">{{ room.status }}</td>
+									<td class="font-italic">{{ room.has_damages }}</td>
+									<td class="font-italic">{{ room.updated_at|date:"Y-m-d H:i" }}</td>
 									<td class="text-center">
 										<a href="{% url 'view_room' room.pk %}" class="btn btn-info btn-sm">View</a>
 										<a href="{% url 'edit_room' room.pk %}" class="btn btn-warning btn-sm">Edit</a>

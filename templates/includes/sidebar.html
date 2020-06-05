@@ -14,17 +14,18 @@
 		</a>
 		<div class="collapse pl-3" id="customers">
 			<a class="list-group-item a-l" href="{% url 'customers' %}">All Customers</a>
-			<a class="list-group-item a-l" href="{% url 'customers' %}">Active</a>
-			<a class="list-group-item a-l" href="{% url 'customers' %}">Closed</a>
+			<a class="list-group-item a-l" href="{% url 'active_customers' %}">Active</a>
+			<a class="list-group-item a-l" href="{% url 'closed_customers' %}">Closed</a>
 		</div>
 		<a class="list-group-item" data-toggle="collapse" href="#rooms" role="button" aria-expanded="false" aria-controls="rooms">
 		    Rooms
 		</a>
 		<div class="collapse pl-3" id="rooms">
 			<a class="list-group-item a-l" href="{% url 'rooms' %}">All Rooms</a>
-			<a class="list-group-item a-l" href="{% url 'rooms' %}">Active</a>
-			<a class="list-group-item a-l" href="{% url 'rooms' %}">Not Active</a>
-			<a class="list-group-item a-l" href="{% url 'rooms' %}">Has Damages</a>
+			<a class="list-group-item a-l" href="{% url 'booked_rooms' %}">Booked Rooms</a>
+			<a class="list-group-item a-l" href="{% url 'not_booked_rooms' %}">Not Booked Rooms</a>
+			<a class="list-group-item a-l" href="{% url 'has_damages_rooms' %}">Rooms with Damages</a>
+			<a class="list-group-item a-l" href="{% url 'damages' %}">Damages</a>
 		</div>
 		<a class="list-group-item" data-toggle="collapse" href="#payments" role="button" aria-expanded="false" aria-controls="payments">
 		    Payments

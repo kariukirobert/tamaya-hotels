@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Hotel Damages
+{% endblock title %}
+
+{% block main %}
+	<div class="card">
+	    <div class="card-body main-height">
+			<div class="shadow-none mb-3 rounded breadcrumb">
+				<ul class="list-unstyled mb-0">
+					<li class="d-inline-block text-primary"><h3>Damages</h3></li>
+					<li class="d-inline-block ml-5"><a href="{% url 'new_room' %}" class="btn btn-primary">New</a></li>
+				</ul>
+			</div>
+			<div class="table-responsive">
+				{% if not damages.exists %}
+					<div class="container d-flex justify-content-center align-items-center">
+						<div class="alert alert-danger w-100">
+							<p>{{ e_r_text }}</p>
+						</div>
+					</div>
+				{% else %}
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th class="text-center font-italic" scope="col">Room Number</th>
+								<th class="text-center font-italic" scope="col">Description</th>
+								<th class="text-center font-italic" scope="col">Status</th>
+								<th class="text-center font-italic" scope="col">Updated On</th>
+								<th class="text-center font-italic" scope="col">Updated By</th>
+								<th class="font-italic text-center tb-action" scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for damage in damages %}
+								<tr>
+									<td scope="row">{{ forloop.counter }}</td>
+									<td class="text-center font-weight-bold font-italic">
+										<a href="{% url 'view_room' damage.room.pk %}">Room {{ damage.room.room_number }}</a>
+									</td>
+
+									<td class="{% if not damage.description %}text-center font-weight-bold {% endif %} text-capitalize">
+										{% if not damage.description  %} - {% else %} {{ damage.description|truncatechars:40 }} {% endif %}
+									</td>
+
+									<td>
+										{% if damage.is_repaired  %} <span class="text-white bg-danger py-2 px-3">Pending</span> {% else %} <span class="text-success ">Complete</span> {% endif %}
+									</td>
+									<td>{{ damage.updated_at|date:"Y-m-d H:i" }}</td>
+									<td class="text-capitalize">{{ damage.updated_by }}</td>
+									<td class="text-center">
+										<a href="{% url 'view_damage' damage.pk %}" class="btn btn-info btn-sm">View</a>
+										<a href="{% url 'edit_damage' damage.pk %}" class="btn btn-warning btn-sm">Edit</a>
+										<a href="{% url 'delete_damage' damage.pk %}" class="btn btn-danger btn-sm">Delete</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	{% include "includes/pagination.html" %}
+
+{% endblock main %}

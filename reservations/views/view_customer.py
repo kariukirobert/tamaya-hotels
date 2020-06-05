@@ -10,6 +10,17 @@ def customerList(request):
 	return render(request, 'customers.html', { 'reservations': obj })
 
 
+def activeCustomer(request):
+	reservation = Reservation.objects.active()
+	obj = reservation.select_related('customer', 'room')
+	return render(request, 'customers.html', { 'reservations': obj })
+
+def closedCustomer(request):
+	reservation = Reservation.objects.closed()
+	obj = reservation.select_related('customer', 'room')
+	return render(request, 'customers.html', { 'reservations': obj })
+
+
 def createCustomer(request):
 	form = CustomerForm(request.POST or None)
 	if form.is_valid():
