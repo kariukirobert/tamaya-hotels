@@ -15,6 +15,10 @@ DEBUG_TOOLBAR_CONFIG = {
     'JQUERY_URL': '',
 }
 
+
+# Database
+# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -28,13 +32,6 @@ DATABASES = {
 
 INTERNAL_IPS = ('127.0.0.1',)
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
 
 def show_toolbar(request):
     return True

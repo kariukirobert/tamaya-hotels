@@ -1,45 +1,56 @@
+import csv
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
 from django.utils.crypto import get_random_string
 from ..models import Reservation, Room, Customer
 from ..forms import ReservationForm, UpdateReservationForm, CustomerForm
 from django.contrib import messages
+from django.http import HttpResponse, HttpResponseNotFound
+from django.contrib.auth.models import User
 
 
+@login_required
 def index(request):
     return redirect('dashboard')
         
-        
+
+@login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
 
 
+@login_required
 def reservationsList(request):
 	obj = Reservation.objects.select_related('room', 'customer')
-	# page = request.GET.get('page', 1)
-	# page = request.GET.get('page', 1)
+	# queryset = Reservation.objects.all().order_by('-created_at')
+	paginator = Paginator(obj, 4)
 
-	# paginator = Paginator(obj, 5)
-	# paginator = Paginator(queryset, 20)
+	page_number = request.GET.get('page', 1)
+
 	
-	# try:
-	# 	reservations = paginator.page(page)
-	# except PageNotAnInteger:
+	try:
+		reservations = paginator.get_page(page_number)
+	except PageNotAnInteger:
 	# 	# fallback to first page
-	# 	reservations = paginator.page(1)
-	# except EmptyPage:
+		reservations = paginator.get_page(1)
+	except EmptyPage:
 	# 	# probably the user tried to add a page number
 	# 	# in the url, so we fallback to the last page
-	# 	reservations = paginator.page(paginator.num_pages)
-
+		reservations = paginator.get_page(paginator.num_pages)
+	# print(reservations.object_list)
 	return render(request, 'reservations.html', { 'reservations': obj })
 
+
+@login_required
 def activeReservation(request):
 	obj = Reservation.objects.select_related('room', 'customer').active()
 	return render(request, 'reservations.html', { 'reservations': obj })
 
 
+@login_required
 def closedReservation(request):
 	obj = Reservation.objects.select_related('room', 'customer').closed()
 	return render(request, 'reservations.html', { 'reservations': obj })
@@ -152,3 +163,47 @@ def generateCode():
 		return generateCode()
 
 	return random_string
+
+
+def view_pdf(request):
+	fs = FileSystemStorage()
+	filename = 'business-by-the-book.pdf'
+	if fs.exists(filename):
+		with fs.open(filename) as pdf:
+			response = HttpResponse(pdf, content_type='application/pdf')
+			# response['Content-Disposition'] = 'attachment; filename="business-by-the-book.pdf"'
+			response['Content-Disposition'] = 'inline; filename="business-by-the-book.pdf"'
+			return response
+	else:
+		return HttpResponseNotFound('The file was not found.')
+
+
+def export_users_to_csv(request):
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="users.csv'
+
+	writer = csv.writer(response)
+	writer.writerow(['username', 'first name', 'last name', 'email address'])
+
+	users = User.objects.all().values_list('username', 'last_name', 'first_name', 'email')
+	for user in users:
+		writer.writerow(user)
+
+	return response
+
+
+def export_to_csv(request):
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="hotel reservations.csv"'
+
+	writer = csv.writer(response)
+	writer.writerow(['Customer', 'Room Booked', 'No. of Nights', 'Check-in date', 'Check-out date', 'is-active', 'Amount Paid', 'Payment Mode', 'Date Created'])
+
+	obj = Reservation.objects.all()
+	# values_list('customer','room','nights','check_in','check_out','is_active','created_at')
+	reservations = obj.select_related('customer', 'room')
+
+	for res in reservations:
+		writer.writerow([res.customer, res.room, res.nights, res.check_in, res.check_out, res.is_active, res.created_at])
+
+	return response

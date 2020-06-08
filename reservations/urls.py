@@ -7,6 +7,9 @@ urlpatterns = [
     path('staffAccount/', views.dashboard, name='dashboard'),
     path('staffAccount/dashboard/', views.dashboard, name='dashboard'),
 
+    path('staffAccount/view-pdf/', views.view_pdf, name='view_pdf'),
+    path('staffAccount/export-users-csv/', views.export_to_csv, name='export_users_csv'),
+
     path('staffAccount/reservations/', views.reservationsList, name='reservations'),
     path('staffAccount/reservations/new/', views.createReservation, name='new_reservation'),
     path('staffAccount/reservations/active/', views.activeReservation, name='active_reservations'),

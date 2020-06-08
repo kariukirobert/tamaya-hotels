@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load widget_tweaks %}
-
 {% block main %}
 	<div class="card">
 	    <div class="card-body">
@@ -11,27 +9,9 @@
 			 			<h2 class="text-center font-weight-bold font-italic text-primary">Create New Reservation</h2>
 			 			{# {% include "includes/messages.html" %} #}
 		 				<form method="POST" novalidate>
-		 					{% csrf_token %}
+								{% csrf_token %}
 
-		 					{% for field in form %}
-		 						<div class="form-group">
-			 						{{ field.label_tag }}
-		 							{% if form.is_bound %}
-		 							    {% if field.errors %}
-		 							    	{% render_field field class="form-control is-invalid" %}
-		 							        {% for error in field.errors %}
-		 							        	<div class="invalid-feedback">
-		 							        		{{ error }}
-		 							        	</div>
-		 							        {% endfor %}
-		 							    {% else %}
-		 							    	{% render_field field class="form-control is-valid" %}
-		 							    {% endif %}
-		 							{% else %}
-										{% render_field field class="form-control" %}
-		 							{% endif %}
-		 						</div>
-		 					{% endfor %}
+		 					{% include 'includes/form.html' %}
 		 					
 		 					<button class="btn btn-primary float-right mr-5 col-2">Submit</button>
 		 				</form>
